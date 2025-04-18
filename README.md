@@ -1,6 +1,5 @@
 # AWS Project - Web Application with 7 Services 
 
-
 We're creating a web application for a unicorn ride-sharing service called Wild Rydes. The app uses IAM, Amplify, Cognito, Lambda, API Gateway and DynamoDB, with code stored in GitHub and incorporated into a CI/CD pipeline with Amplify.
 
 The app will let you create an account and log in, then request a ride by clicking on a map (powered by ArcGIS).  The code can also be extended to build out more functionality.
@@ -118,4 +117,12 @@ Here is the code used to test the Lambda function:
     "body": "{\"PickupLocation\":{\"Latitude\":47.6174755835663,\"Longitude\":-122.28837066650185}}"
 }
 ```
+The Flow:
 
+Phase | Action
+User Authentication | You log in using AWS Cognito
+Token Handling | Cognito returns tokens (Access, ID, Refresh)
+API Protection | API Gateway uses Cognito User Pool Authorizer to validate token
+Backend Processing | Lambda receives authorized request, gets your identity from the token, and performs actions (e.g., write to DB, trigger notifications, etc.)
+Result to User | You get real-time feedback in your app with relevant info
+Token Refresh | App uses Refresh Token silently to get new access tokens
